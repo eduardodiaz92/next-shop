@@ -1,16 +1,29 @@
 import { useRef } from 'react';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+import { useAuth } from '../hooks/useAuth';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const auth = useAuth();
+  const [loginError, setLoginError] = useState(false);
 
   const submitHandler = (event) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    console.log(email, password);
+    auth
+      .signIn(email, password)
+      .then(() => {
+        setLoginError(true);
+        console.log('Login success');
+      })
+      .catch((err) => {
+        setLoginError(true);
+        console.log('login error');
+      });
   };
   return (
     <>
@@ -81,6 +94,7 @@ export default function LoginPage() {
                 Sign in
               </button>
             </div>
+            {loginError ? <p className="text-center">Invalid username or password</p> : ''}
           </form>
         </div>
       </div>
