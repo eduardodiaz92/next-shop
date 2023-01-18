@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { PlusIcon } from '@heroicons/react/20/solid';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import Modal from '../../common/Modal';
 import FormProduct from '../../components/FormProduct';
 import axios from 'axios';
 import endPoints from '../../services/api';
 import useAlert from '../../hooks/useAlert';
 import Alert from '../../common/Alert';
+import { deleteProduct } from '../../services/api/product';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -26,6 +28,17 @@ export default function Products() {
       console.log(error);
     }
   }, [alert]);
+
+  const handleDelete = (id) => {
+    deleteProduct(id).then(() => {
+      setAlert({
+        active: true,
+        message: 'Delete product successfully',
+        type: 'error',
+        autoClose: true,
+      });
+    });
+  };
 
   return (
     <>
@@ -100,14 +113,12 @@ export default function Products() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <a href="/edit" className="text-indigo-600 hover:text-indigo-900">
                           Edit
                         </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Delete
-                        </a>
+                        <XCircleIcon className="flex-shrink-0 h-6 w-6 text-gray-400 cursor-pointer" onClick={() => handleDelete(product.id)} aria-hidden="true" />
                       </td>
                     </tr>
                   ))}
