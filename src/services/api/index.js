@@ -11,7 +11,7 @@ const endPoints = {
     getProduct: (id) => `${API}/api/${VERSION}/auth/products/${id}`,
     updateProduct: (id) => `${API}/api/${VERSION}/auth/products/${id}`,
     deleteProduct: (id) => `${API}/api/${VERSION}/auth/products/${id}`,
-    addProduct: `${API}/api/${VERSION}/products`,
+    addProducts: `${API}/api/${VERSION}/products`,
   },
   user: {
     getListUsers: (limit) => `${API}/api/${VERSION}/users?limit=${limit}'`,
