@@ -1,31 +1,37 @@
-import endPoints from '../../services/api';
-import useFetch from '../../hooks/useFetch';
-import Chart from '../../common/Chart';
-const PRODUCT_LIMIT = 5;
-const PRODUCT_OFFSET = 5;
+import { useState } from 'react';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import Modal from '../../common/Modal';
 
-export default function Dashboard() {
-  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET));
-
-  const categoryNames = products?.map((product) => product.category);
-  const categoryCount = categoryNames?.map((category) => category.name);
-
-  const countOcurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev), {});
-
-  const data = {
-    datasets: [
-      {
-        label: 'Categories',
-        data: countOcurrences(categoryCount),
-        borderWidth: 2,
-        backgroundColor: ['#ffbb11', '#c0c0c0', '#50AF95', '#f3ba2f', '#2a71d0'],
-      },
-    ],
-  };
-
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+export default function products() {
+  const [open, setOpen] = useState(false);
+  const [products, setProducts] = useState([]);
   return (
     <>
-      <Chart className="mb-8 mt-2" chartData={data} />
+      <div className="lg:flex lg:items-center lg:justify-between mb-8">
+        <div className="min-w-0 flex-1">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of products</h2>
+          <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6"></div>
+        </div>
+        <div className="mt-5 flex lg:mt-0 lg:ml-4">
+          <span className="hidden sm:block"></span>
+
+          <span className="ml-3 hidden sm:block"></span>
+
+          <span className="sm:ml-3">
+            <button
+              type="button"
+              className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={() => setOpen(true)}
+            >
+              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Add product
+            </button>
+          </span>
+        </div>
+      </div>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -91,6 +97,9 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <Modal open={open} setOpen={setOpen}>
+        <h1>Hola mundo</h1>
+      </Modal>
     </>
   );
 }

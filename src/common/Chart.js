@@ -22,3 +22,5 @@ export const Chart = ({ chartData }) => {
     </>
   );
 };
+
+export default Chart;
