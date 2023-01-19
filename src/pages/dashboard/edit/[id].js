@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FormProduct from '../../../components/FormProduct';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import endPoints from '../../../services/api/index';
+import endPoints from '../../../services/api';
 
 export default function Edit() {
   const [product, setProduct] = useState({});
